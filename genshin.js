@@ -35,6 +35,7 @@ $.ajax({
 
                     elem = document.createElement("h2");
                     elem.innerText = "Name of the character: "+data.name;
+                    elem.setAttribute("id",data.name);
                     elem.setAttribute("onclick",'show("'+data.name+'")');
                     elem.setAttribute("class",'panel-heading');
                     el.appendChild(elem);
@@ -65,6 +66,12 @@ $.ajax({
 var temp;
 var temp_character;
 
+document.addEventListener("keyup", function(event) {
+    if (event.keyCode === 13) {
+        search();
+    }
+});
+
 function find(search){
     var s = 0;
     var el;
@@ -75,6 +82,15 @@ function find(search){
         s = s+1;
     }
     return found;
+}
+function exist(search){
+    var answer = false;
+    array.forEach(element => {
+        if(search == element.name){
+            answer = true;
+        }
+    });
+    return answer;
 }
 function show(s){
     temp = [];
@@ -98,6 +114,35 @@ function show(s){
           clearInterval(timerInterval)
         }
       })
+}
+function search(){
+    var query = document.getElementById("search_input");
+    var query_value = query.value;
+    if(query_value != "" && query_value != null && query_value != undefined){
+        if(exist(query_value)){
+            var e = document.getElementById(query_value);
+            e.scrollIntoView();
+        }
+        else{
+            query.value = "";
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+              })
+              
+              Toast.fire({
+                icon: 'error',
+                title: 'wrong character name'
+              })
+        }
+    }
 }
 function show_attack(search,character){
     var found = character;
