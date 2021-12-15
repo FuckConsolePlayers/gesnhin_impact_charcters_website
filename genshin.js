@@ -118,6 +118,8 @@ function show(s){
 function search(){
     var query = document.getElementById("search_input");
     var query_value = query.value;
+    var char = query_value.charAt(0).toUpperCase();
+    query_value = char+query_value.substring(1);
     if(query_value != "" && query_value != null && query_value != undefined){
         if(exist(query_value)){
             var e = document.getElementById(query_value);
