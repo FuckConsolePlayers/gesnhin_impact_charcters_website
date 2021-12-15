@@ -113,8 +113,8 @@ function show_attack(search,character){
     if(founded.upgrades != undefined && founded.upgrades != null){
         temp_html = "<h1>Upgrades</h1>\n"
         founded.upgrades.forEach(element => {
-            temp_html = temp_html + '<h2>Name: '+element.name+'</h2>'+'\n';
-            temp_html = temp_html + '<h3>Value: '+element.value+'</h3>'+'\n';
+            temp_html = temp_html + '<h2>'+element.name+' - ';
+            temp_html = temp_html + element.value+'</h2>'+'\n';
         });
         if(temp_html != ""){
             let timerInterval;
