@@ -1,5 +1,21 @@
 var body = document.getElementsByTagName("body");
 var elem;
+const visions = new Map();
+visions.set('Cryo', 'https://mundogenshinimpact.com/wp-content/uploads/3_Genshin-%C2%BFQue-es-la-resonancia-elemental.png');
+visions.set('Pyro', 'https://mundogenshinimpact.com/wp-content/uploads/Genshin-%C2%BFQue-es-la-resonancia-elemental.png');
+visions.set('Geo','https://mundogenshinimpact.com/wp-content/uploads/1_Genshin-%C2%BFQue-es-la-resonancia-elemental.png');
+visions.set('Electro','https://mundogenshinimpact.com/wp-content/uploads/5_Genshin-%C2%BFQue-es-la-resonancia-elemental.png');
+visions.set('Anemo','https://mundogenshinimpact.com/wp-content/uploads/4_Genshin-%C2%BFQue-es-la-resonancia-elemental.png');
+visions.set('Dendro','https://mundogenshinimpact.com/wp-content/uploads/6_Genshin-%C2%BFQue-es-la-resonancia-elemental.png');
+visions.set('Hydro','https://mundogenshinimpact.com/wp-content/uploads/2_Genshin-%C2%BFQue-es-la-resonancia-elemental.png');
+const nations = new Map();
+nations.set('Mondstadt','https://static.wikia.nocookie.net/gensin-impact/images/c/c4/Viewpoint_The_City_of_Wind.png/revision/latest?cb=20210415173019');
+nations.set('Inazuma','https://static.wikia.nocookie.net/gensin-impact/images/6/6e/Tenshukaku.png/revision/latest?cb=20210709174037');
+nations.set('Liyue','https://static.wikia.nocookie.net/gensin-impact/images/f/f9/Harbor.png/revision/latest?cb=20200915170645');
+const nations_icons = new Map();
+nations_icons.set('Mondstadt','https://static.wikia.nocookie.net/gensin-impact/images/8/80/Emblem_Mondstadt.png/revision/latest/scale-to-width-down/256?cb=20201116194623');
+nations_icons.set('Inazuma','https://static.wikia.nocookie.net/gensin-impact/images/9/9e/Emblem_Inazuma.png/revision/latest/scale-to-width-down/350?cb=20210610232013');
+nations_icons.set('Liyue','https://static.wikia.nocookie.net/gensin-impact/images/f/f8/Emblem_Liyue.png/revision/latest/scale-to-width-down/256?cb=20201116194654');
 var array = [];
 $.ajax({
 
@@ -32,9 +48,16 @@ $.ajax({
                     el = document.createElement("div");
                     el.setAttribute("class",'panel-default');
 
+                    elem = document.createElement("img");
+                    elem.setAttribute("class",'panel-body');
+                    elem.setAttribute("src",visions.get(data.vision));
+                    elem.setAttribute("width","32");
+                    elem.setAttribute("height","32");
+                    elem.setAttribute("align","left");
+                    el.appendChild(elem);
 
                     elem = document.createElement("h2");
-                    elem.innerText = "Name of the character: "+data.name;
+                    elem.innerText = " Name of the character: "+data.name;
                     elem.setAttribute("id",data.name);
                     elem.setAttribute("onclick",'show("'+data.name+'")');
                     elem.setAttribute("class",'panel-heading');
@@ -45,7 +68,27 @@ $.ajax({
                     elem.innerText = "Weapon of the character: "+data.weapon;
                     elem.setAttribute("class",'panel-body');
                     el.appendChild(elem);
-                    //$("#lol")[0].appendChild(elem);
+
+                    try{
+                        if(nations_icons.get(data.nation) != undefined){
+                            elem = document.createElement("img");
+                            elem.setAttribute("class",'panel-body');
+                            elem.setAttribute("src",nations_icons.get(data.nation));
+                            elem.setAttribute("width","32");
+                            elem.setAttribute("height","32");
+                            elem.setAttribute("align","left");
+                            el.appendChild(elem);
+                        }
+                    }
+                    catch{
+
+                    }
+
+                    elem = document.createElement("h3");
+                    elem.innerText = "Nation of the character: "+data.nation;
+                    elem.setAttribute("class",'panel-body');
+                    elem.setAttribute("onclick",'show_nation("'+data.nation+'")');
+                    el.appendChild(elem);
 
                     elem = document.createElement("p");
                     elem.setAttribute("class",'panel-footer');
@@ -65,13 +108,39 @@ $.ajax({
 });
 var temp;
 var temp_character;
-
 document.addEventListener("keyup", function(event) {
     if (event.keyCode === 13) {
         search();
     }
 });
-
+function show_nation(s){
+    if(s == "Unknown"){
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
+          
+          Toast.fire({
+            icon: 'error',
+            title: ' the nation of this character is unknown'
+          })
+    }
+    else{
+          Swal.fire({
+            title: s,
+            imageUrl: nations.get(s),
+            imageWidth: 400,
+            imageHeight: 200,
+          })
+    }
+}
 function find(search){
     var s = 0;
     var el;
