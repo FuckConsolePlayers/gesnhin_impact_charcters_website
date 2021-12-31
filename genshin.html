@@ -6,17 +6,33 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="genshin.js" charset="UTF-8"></script>
 </head>
+<style>
+    @keyframes example {
+  0%   {color: black;}
+  20%  {color: yellow;}
+  30%  {color: blue;}
+  40% {color: green;}
+  50% {color: cyan;}
+  60% {color: blue;}
+  70% {color: yellowgreen;}
+  80% {color: yellow;}
+  90% {color: orange;}
+  100% {color: black;}
+}
+.found{
+  animation-name: example;
+  animation-duration: 4s;
+}
+</style>
 <body id="lol">
-    <header>
-        <nav class="parent">
-            <p>                                                                         </p>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" onclick="search()" id="inputGroup-sizing-default">Search</span>
-                </div>
-                <input type="text" id="search_input" class="form-control" aria-label="Default" width="150" aria-describedby="inputGroup-sizing-default">
+    <div class="container">
+        <p>                                                                         </p>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" onclick="search()" id="inputGroup-sizing-default">Search</span>
             </div>
-            <p>                                                                         </p>
-        </nav>
-    </header>
+            <input type="text" id="search_input" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+        </div>
+        <p>                                                                         </p>
+    </div>
 </body>
